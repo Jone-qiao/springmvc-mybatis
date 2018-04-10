@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffox.ssh.mapper.ProductsMapperCustom">
+
+	<!-- sql片段 -->
+	<sql id="query_products_where">
+		<if test="productsCustom != null">
+			<if test="productsCustom.name != null and productsCustom.name != ''">
+				products.name like '%${productsCustom.name}%'
+			</if>
+		</if>
+	</sql>
+
+	<select id="getProductsList" parameterType="com.ffox.ssh.po.ProductsQueryVo"
+		resultType="com.ffox.ssh.po.ProductsCustom">
+		SELECT * FROM products
+		<where>
+			<include refid="query_products_where" />
+		</where>
+	</select>
+	
+	<select id="findProductById" parameterType="Integer"
+		resultType="com.ffox.ssh.po.ProductsCustom">
+		SELECT * FROM products where id=#{id}
+	</select>
+	
+</mapper>
